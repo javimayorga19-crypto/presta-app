@@ -8,14 +8,14 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 248 250 252;
-    --foreground: 226 231 234;
+    --background: 220 25% 97%;
+    --foreground: 220 15% 25%;
 
-    --card: 255 255 255;
-    --card-foreground: 15 23 42;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 25%;
 
-    --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 25%;
 
     --primary: 219 78% 36%;
     --primary-foreground: 248 250 252;
@@ -25,55 +25,48 @@ All colors MUST be HSL.
     --secondary-foreground: 248 250 252;
     --secondary-glow: 147 51% 54%;
 
-    --muted: 226 232 240;
-    --muted-foreground: 100 116 139;
+    --muted: 220 15% 92%;
+    --muted-foreground: 220 10% 45%;
 
     --accent: 30 77% 55%;
-    --accent-foreground: 248 250 252;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
-    --destructive-foreground: 248 250 252;
+    --destructive-foreground: 0 0% 100%;
 
     --success: 142 71% 45%;
-    --success-foreground: 248 250 252;
+    --success-foreground: 0 0% 100%;
 
     --warning: 45 93% 58%;
-    --warning-foreground: 15 23 42;
+    --warning-foreground: 220 15% 25%;
 
-    --border: 226 232 240;
-    --input: 226 232 240;
+    --border: 220 15% 88%;
+    --input: 220 15% 90%;
     --ring: 219 78% 36%;
 
     /* Financial gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
     --gradient-success: linear-gradient(135deg, hsl(var(--success)), hsl(var(--secondary-glow)));
-    --gradient-card: linear-gradient(145deg, hsl(255 255 255 / 0.8), hsl(248 250 252 / 0.4));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100% / 0.9), hsl(220 25% 97% / 0.6));
     
     /* Shadows */
-    --shadow-financial: 0 4px 20px -2px hsl(var(--primary) / 0.1);
-    --shadow-success: 0 4px 20px -2px hsl(var(--success) / 0.15);
-    --shadow-card: 0 2px 10px -2px hsl(15 23 42 / 0.1);
+    --shadow-financial: 0 4px 20px -2px hsl(var(--primary) / 0.15);
+    --shadow-success: 0 4px 20px -2px hsl(var(--success) / 0.2);
+    --shadow-card: 0 2px 12px -2px hsl(220 15% 25% / 0.08);
 
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 99%;
+    --sidebar-foreground: 220 15% 30%;
+    --sidebar-primary: 219 78% 36%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 15% 95%;
+    --sidebar-accent-foreground: 220 15% 30%;
+    --sidebar-border: 220 15% 90%;
+    --sidebar-ring: 219 78% 36%;
   }
 
   .dark {
