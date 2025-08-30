@@ -19,7 +19,7 @@ import {
 } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import * as XLSX from 'xlsx'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/integrations/supabase/client'
 import { syncManager } from '@/lib/offline-db'
 
 interface ImportResult {
