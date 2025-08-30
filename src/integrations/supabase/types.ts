@@ -14,7 +14,329 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      backups: {
+        Row: {
+          archivo_url: string
+          created_at: string
+          created_by: string
+          descripcion: string | null
+          id: string
+          nombre: string
+          tamano: number
+          tipo: string
+        }
+        Insert: {
+          archivo_url: string
+          created_at?: string
+          created_by?: string
+          descripcion?: string | null
+          id?: string
+          nombre: string
+          tamano?: number
+          tipo?: string
+        }
+        Update: {
+          archivo_url?: string
+          created_at?: string
+          created_by?: string
+          descripcion?: string | null
+          id?: string
+          nombre?: string
+          tamano?: number
+          tipo?: string
+        }
+        Relationships: []
+      }
+      clients: {
+        Row: {
+          cedula: string | null
+          clasificacion: string
+          cobrador: string
+          codigo: string
+          created_at: string
+          direccion: string | null
+          estado: string
+          fecha_ultimo_pago: string | null
+          id: string
+          nombre: string
+          orden_ruta: number
+          ruta: string
+          saldo_pendiente: number
+          telefono: string | null
+          updated_at: string
+        }
+        Insert: {
+          cedula?: string | null
+          clasificacion?: string
+          cobrador?: string
+          codigo: string
+          created_at?: string
+          direccion?: string | null
+          estado?: string
+          fecha_ultimo_pago?: string | null
+          id?: string
+          nombre: string
+          orden_ruta?: number
+          ruta?: string
+          saldo_pendiente?: number
+          telefono?: string | null
+          updated_at?: string
+        }
+        Update: {
+          cedula?: string | null
+          clasificacion?: string
+          cobrador?: string
+          codigo?: string
+          created_at?: string
+          direccion?: string | null
+          estado?: string
+          fecha_ultimo_pago?: string | null
+          id?: string
+          nombre?: string
+          orden_ruta?: number
+          ruta?: string
+          saldo_pendiente?: number
+          telefono?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      expenses: {
+        Row: {
+          categoria: string
+          cobrador: string
+          comprobante_url: string | null
+          concepto: string
+          created_at: string
+          descripcion: string | null
+          fecha: string
+          id: string
+          monto: number
+          ruta: string
+          updated_at: string
+        }
+        Insert: {
+          categoria?: string
+          cobrador?: string
+          comprobante_url?: string | null
+          concepto: string
+          created_at?: string
+          descripcion?: string | null
+          fecha?: string
+          id?: string
+          monto: number
+          ruta?: string
+          updated_at?: string
+        }
+        Update: {
+          categoria?: string
+          cobrador?: string
+          comprobante_url?: string | null
+          concepto?: string
+          created_at?: string
+          descripcion?: string | null
+          fecha?: string
+          id?: string
+          monto?: number
+          ruta?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      loans: {
+        Row: {
+          client_id: string
+          cobrador: string
+          codigo: string
+          created_at: string
+          estado: string
+          fecha_desembolso: string
+          fecha_proximo_pago: string
+          fecha_vencimiento: string
+          frecuencia: string
+          id: string
+          monto_original: number
+          plazo_restante: number
+          plazo_total: number
+          ruta: string
+          saldo_pendiente: number
+          tasa_interes: number
+          updated_at: string
+          valor_cuota: number
+        }
+        Insert: {
+          client_id: string
+          cobrador?: string
+          codigo: string
+          created_at?: string
+          estado?: string
+          fecha_desembolso: string
+          fecha_proximo_pago: string
+          fecha_vencimiento: string
+          frecuencia?: string
+          id?: string
+          monto_original: number
+          plazo_restante: number
+          plazo_total: number
+          ruta?: string
+          saldo_pendiente: number
+          tasa_interes?: number
+          updated_at?: string
+          valor_cuota: number
+        }
+        Update: {
+          client_id?: string
+          cobrador?: string
+          codigo?: string
+          created_at?: string
+          estado?: string
+          fecha_desembolso?: string
+          fecha_proximo_pago?: string
+          fecha_vencimiento?: string
+          frecuencia?: string
+          id?: string
+          monto_original?: number
+          plazo_restante?: number
+          plazo_total?: number
+          ruta?: string
+          saldo_pendiente?: number
+          tasa_interes?: number
+          updated_at?: string
+          valor_cuota?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "loans_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payments: {
+        Row: {
+          client_id: string
+          cobrador: string
+          created_at: string
+          fecha_pago: string
+          id: string
+          loan_id: string
+          metodo_pago: string
+          monto: number
+          numero_recibo: string
+          observaciones: string | null
+          tipo: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          cobrador?: string
+          created_at?: string
+          fecha_pago: string
+          id?: string
+          loan_id: string
+          metodo_pago?: string
+          monto: number
+          numero_recibo: string
+          observaciones?: string | null
+          tipo?: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          cobrador?: string
+          created_at?: string
+          fecha_pago?: string
+          id?: string
+          loan_id?: string
+          metodo_pago?: string
+          monto?: number
+          numero_recibo?: string
+          observaciones?: string | null
+          tipo?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_loan_id_fkey"
+            columns: ["loan_id"]
+            isOneToOne: false
+            referencedRelation: "loans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      routes: {
+        Row: {
+          activa: boolean
+          cobrador: string
+          created_at: string
+          descripcion: string | null
+          id: string
+          nombre: string
+          updated_at: string
+        }
+        Insert: {
+          activa?: boolean
+          cobrador?: string
+          created_at?: string
+          descripcion?: string | null
+          id?: string
+          nombre: string
+          updated_at?: string
+        }
+        Update: {
+          activa?: boolean
+          cobrador?: string
+          created_at?: string
+          descripcion?: string | null
+          id?: string
+          nombre?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      users: {
+        Row: {
+          activo: boolean
+          created_at: string
+          email: string
+          id: string
+          nombre: string
+          rol: string
+          rutas_asignadas: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          activo?: boolean
+          created_at?: string
+          email: string
+          id?: string
+          nombre: string
+          rol?: string
+          rutas_asignadas?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          activo?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+          nombre?: string
+          rol?: string
+          rutas_asignadas?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
