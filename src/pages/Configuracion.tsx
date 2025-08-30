@@ -13,8 +13,10 @@ import {
   Eye,
   Edit,
   Trash2,
-  Plus
+  Plus,
+  Upload
 } from "lucide-react";
+import { InitialDataImporter } from "@/components/config/InitialDataImporter";
 
 interface Usuario {
   id: string;
@@ -141,6 +143,10 @@ const Configuracion = () => {
           <TabsTrigger value="rutas" className="flex items-center space-x-2">
             <MapPin className="w-4 h-4" />
             <span>Rutas</span>
+          </TabsTrigger>
+          <TabsTrigger value="datos" className="flex items-center space-x-2">
+            <Upload className="w-4 h-4" />
+            <span>Datos Iniciales</span>
           </TabsTrigger>
           <TabsTrigger value="sistema" className="flex items-center space-x-2">
             <Settings className="w-4 h-4" />
@@ -314,6 +320,22 @@ const Configuracion = () => {
                 </Card>
               ))}
             </div>
+          </div>
+        </TabsContent>
+
+        {/* Datos Iniciales Tab */}
+        <TabsContent value="datos">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-semibold">Importación de Datos Iniciales</h2>
+                <p className="text-muted-foreground">
+                  Carga datos masivos desde archivos Excel para el inicio de operaciones
+                </p>
+              </div>
+            </div>
+            
+            <InitialDataImporter />
           </div>
         </TabsContent>
 
