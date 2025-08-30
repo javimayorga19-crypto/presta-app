@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DraggableClientList } from "@/components/clients/DraggableClientList";
 import { 
   Plus, 
   Search, 
@@ -11,7 +13,8 @@ import {
   User,
   Phone,
   CreditCard,
-  MoreVertical
+  MoreVertical,
+  ArrowUpDown
 } from "lucide-react";
 
 interface Cliente {
@@ -120,6 +123,21 @@ const Clientes = () => {
           Nuevo Cliente
         </Button>
       </div>
+
+      {/* Tabs Navigation */}
+      <Tabs defaultValue="lista" className="w-full">
+        <TabsList className="grid w-full grid-cols-2 lg:w-[400px]">
+          <TabsTrigger value="lista" className="flex items-center gap-2">
+            <User className="w-4 h-4" />
+            Lista de Clientes
+          </TabsTrigger>
+          <TabsTrigger value="orden-rutas" className="flex items-center gap-2">
+            <ArrowUpDown className="w-4 h-4" />
+            Orden por Rutas
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="lista" className="space-y-6 mt-6">
 
       {/* Filters */}
       <Card>
@@ -258,6 +276,12 @@ const Clientes = () => {
           </div>
         </CardContent>
       </Card>
+        </TabsContent>
+
+        <TabsContent value="orden-rutas" className="space-y-6 mt-6">
+          <DraggableClientList />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
