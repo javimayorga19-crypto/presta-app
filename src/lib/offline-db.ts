@@ -1,5 +1,10 @@
 import Dexie, { Table } from 'dexie'
-import { DatabaseClient, DatabaseLoan, DatabasePayment, DatabaseExpense } from './supabase'
+import { Database } from '@/integrations/supabase/types'
+
+type DatabaseClient = Database['public']['Tables']['clients']['Row']
+type DatabaseLoan = Database['public']['Tables']['loans']['Row']  
+type DatabasePayment = Database['public']['Tables']['payments']['Row']
+type DatabaseExpense = Database['public']['Tables']['expenses']['Row']
 
 // Offline database using IndexedDB
 export class OfflineDatabase extends Dexie {
@@ -94,7 +99,7 @@ export class OfflineSyncManager {
 
   private async syncItem(item: SyncQueueItem) {
     // Import supabase dynamically to avoid circular dependency
-    const { supabase } = await import('./supabase')
+    const { supabase } = await import('@/integrations/supabase/client')
     
     switch (item.table) {
       case 'clients':

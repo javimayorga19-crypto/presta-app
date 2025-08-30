@@ -58,25 +58,73 @@ export const BackupManager = () => {
 
     try {
       // Fetch all data
-      const tables = ['clients', 'loans', 'payments', 'expenses', 'routes', 'users']
       const backupData: Partial<BackupData> = {}
       let totalRecords = 0
 
-      for (let i = 0; i < tables.length; i++) {
-        const table = tables[i]
-        setProgress(Math.round((i / tables.length) * 70))
+      // Fetch clients
+      setProgress(10)
+      const clientsResult = await supabase.from('clients').select('*')
+      if (clientsResult.error) {
+        console.warn('Error fetching clients:', clientsResult.error)
+        backupData.clients = []
+      } else {
+        backupData.clients = clientsResult.data || []
+        totalRecords += clientsResult.data?.length || 0
+      }
 
-        const { data, error } = await supabase
-          .from(table)
-          .select('*')
+      // Fetch loans
+      setProgress(20)
+      const loansResult = await supabase.from('loans').select('*')
+      if (loansResult.error) {
+        console.warn('Error fetching loans:', loansResult.error)
+        backupData.loans = []
+      } else {
+        backupData.loans = loansResult.data || []
+        totalRecords += loansResult.data?.length || 0
+      }
 
-        if (error) {
-          console.warn(`Error fetching ${table}:`, error)
-          ;(backupData as any)[table] = []
-        } else {
-          ;(backupData as any)[table] = data || []
-          totalRecords += data?.length || 0
-        }
+      // Fetch payments
+      setProgress(30)
+      const paymentsResult = await supabase.from('payments').select('*')
+      if (paymentsResult.error) {
+        console.warn('Error fetching payments:', paymentsResult.error)
+        backupData.payments = []
+      } else {
+        backupData.payments = paymentsResult.data || []
+        totalRecords += paymentsResult.data?.length || 0
+      }
+
+      // Fetch expenses
+      setProgress(40)
+      const expensesResult = await supabase.from('expenses').select('*')
+      if (expensesResult.error) {
+        console.warn('Error fetching expenses:', expensesResult.error)
+        backupData.expenses = []
+      } else {
+        backupData.expenses = expensesResult.data || []
+        totalRecords += expensesResult.data?.length || 0
+      }
+
+      // Fetch routes
+      setProgress(50)
+      const routesResult = await supabase.from('routes').select('*')
+      if (routesResult.error) {
+        console.warn('Error fetching routes:', routesResult.error)
+        backupData.routes = []
+      } else {
+        backupData.routes = routesResult.data || []
+        totalRecords += routesResult.data?.length || 0
+      }
+
+      // Fetch users
+      setProgress(60)
+      const usersResult = await supabase.from('users').select('*')
+      if (usersResult.error) {
+        console.warn('Error fetching users:', usersResult.error)
+        backupData.users = []
+      } else {
+        backupData.users = usersResult.data || []
+        totalRecords += usersResult.data?.length || 0
       }
 
       // Add metadata
@@ -179,30 +227,67 @@ export const BackupManager = () => {
         throw new Error('Archivo de respaldo no válido')
       }
 
-      const tables = ['clients', 'loans', 'payments', 'expenses', 'routes']
-      
-      for (let i = 0; i < tables.length; i++) {
-        const table = tables[i]
-        const data = backupData[table as keyof BackupData] as any[]
-        
-        if (data && data.length > 0) {
-          // Clear existing data (be careful!)
-          await supabase.from(table).delete().neq('id', 'impossible-id')
-          
-          // Insert backup data in chunks
-          const chunkSize = 100
-          for (let j = 0; j < data.length; j += chunkSize) {
-            const chunk = data.slice(j, j + chunkSize)
-            const { error } = await supabase.from(table).insert(chunk)
-            
-            if (error) {
-              console.warn(`Error restoring ${table} chunk:`, error)
-            }
-          }
+      // Clear and restore clients
+      setProgress(10)
+      await supabase.from('clients').delete().neq('id', 'impossible-id')
+      if (backupData.clients && backupData.clients.length > 0) {
+        const chunkSize = 100
+        for (let j = 0; j < backupData.clients.length; j += chunkSize) {
+          const chunk = backupData.clients.slice(j, j + chunkSize)
+          const { error } = await supabase.from('clients').insert(chunk)
+          if (error) console.warn('Error restoring clients chunk:', error)
         }
-
-        setProgress(Math.round(((i + 1) / tables.length) * 100))
       }
+
+      // Clear and restore loans
+      setProgress(25)
+      await supabase.from('loans').delete().neq('id', 'impossible-id')
+      if (backupData.loans && backupData.loans.length > 0) {
+        const chunkSize = 100
+        for (let j = 0; j < backupData.loans.length; j += chunkSize) {
+          const chunk = backupData.loans.slice(j, j + chunkSize)
+          const { error } = await supabase.from('loans').insert(chunk)
+          if (error) console.warn('Error restoring loans chunk:', error)
+        }
+      }
+
+      // Clear and restore payments
+      setProgress(50)
+      await supabase.from('payments').delete().neq('id', 'impossible-id')
+      if (backupData.payments && backupData.payments.length > 0) {
+        const chunkSize = 100
+        for (let j = 0; j < backupData.payments.length; j += chunkSize) {
+          const chunk = backupData.payments.slice(j, j + chunkSize)
+          const { error } = await supabase.from('payments').insert(chunk)
+          if (error) console.warn('Error restoring payments chunk:', error)
+        }
+      }
+
+      // Clear and restore expenses
+      setProgress(75)
+      await supabase.from('expenses').delete().neq('id', 'impossible-id')
+      if (backupData.expenses && backupData.expenses.length > 0) {
+        const chunkSize = 100
+        for (let j = 0; j < backupData.expenses.length; j += chunkSize) {
+          const chunk = backupData.expenses.slice(j, j + chunkSize)
+          const { error } = await supabase.from('expenses').insert(chunk)
+          if (error) console.warn('Error restoring expenses chunk:', error)
+        }
+      }
+
+      // Clear and restore routes
+      setProgress(90)
+      await supabase.from('routes').delete().neq('id', 'impossible-id')
+      if (backupData.routes && backupData.routes.length > 0) {
+        const chunkSize = 100
+        for (let j = 0; j < backupData.routes.length; j += chunkSize) {
+          const chunk = backupData.routes.slice(j, j + chunkSize)
+          const { error } = await supabase.from('routes').insert(chunk)
+          if (error) console.warn('Error restoring routes chunk:', error)
+        }
+      }
+
+      setProgress(100)
 
       toast({
         title: "Respaldo restaurado exitosamente",
